@@ -299,6 +299,24 @@ async function resetWeeklyPoints() {
   alert("All weekly points have been reset to zero.");
 }
 
+// Reset total points for all kids
+async function resetTotalPoints() {
+  try {
+    const kidsSnapshot = await getDocs(collection(db, "kids"));
+
+    kidsSnapshot.forEach(async (docSnap) => {
+      const kidRef = doc(db, "kids", docSnap.id);
+      await updateDoc(kidRef, { totalPoints: 0 });
+    });
+
+    alert("All total points have been reset to zero.");
+    fetchKids(); // Refresh the kid list
+  } catch (error) {
+    console.error("Error resetting total points:", error);
+    alert("Failed to reset total points. Please try again.");
+  }
+}
+
 // Fetch initial data
 fetchKids();
 fetchGoals();
@@ -313,3 +331,4 @@ window.editGoal = editGoal;
 window.removeGoal = removeGoal;
 window.setWeekEnd = setWeekEnd;
 window.resetWeeklyPoints = resetWeeklyPoints;
+window.resetTotalPoints = resetTotalPoints;
