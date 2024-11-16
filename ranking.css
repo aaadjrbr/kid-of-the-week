@@ -179,6 +179,8 @@ p {
   align-items: center;
   font-size: 1rem;
   margin: 10px 0;
+  color: #000000;
+  font-weight: 600;
   background: #e3f2fd;
   padding: 10px 15px;
   border-radius: 8px;
