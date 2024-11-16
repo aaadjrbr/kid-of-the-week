@@ -61,6 +61,46 @@ body::before {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.btn-container {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;    /* Centers vertically */
+  margin: 0 auto;         /* Ensures the container itself is centered */
+}
+
+/* General Button Styles */
+button {
+  display: inline-block;
+  font-family: 'Passion One', sans-serif;
+  font-size: 1.1em;
+  font-weight: 400;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Refresh Button Style */
+button.blue {
+  background-color: #007bff;
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+}
+
+button.blue:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 8px rgba(0, 123, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+button.blue:active {
+  background-color: #004494;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+  transform: translateY(2px);
+}
+
 h1 {
   font-family: "Passion One", serif;
   font-weight: 500;
