@@ -9,11 +9,94 @@ import {
   getDoc,
   onSnapshot,
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
 
 const kidSelect = document.getElementById("kidSelect");
 const removeKidSelect = document.getElementById("removeKidSelect");
 const goalList = document.getElementById("goalList");
 const weekEndDisplay = document.getElementById("weekEndDisplay");
+
+// Modal elements
+const auth = getAuth();
+const loginButton = document.getElementById("loginButton");
+const logoutButton = document.getElementById("logoutButton");
+const loginModal = document.getElementById("loginModal");
+const closeBtn = document.querySelector(".close");
+const loginSubmit = document.getElementById("loginSubmit");
+
+// Show the login modal
+loginButton.addEventListener("click", () => {
+  loginModal.style.display = "block";
+});
+
+// Hide the login modal
+closeBtn.addEventListener("click", () => {
+  loginModal.style.display = "none";
+});
+
+// Monitor authentication state
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log(`User logged in: ${user.uid}`);
+      loginButton.style.display = "none"; // Hide login button
+      logoutButton.style.display = "inline-block"; // Show logout button
+    } else {
+      console.log("No user logged in");
+      loginButton.style.display = "inline-block"; // Show login button
+      logoutButton.style.display = "none"; // Hide logout button
+    }
+  });
+  
+  // Show the login modal
+  loginButton.addEventListener("click", () => {
+    loginModal.style.display = "block";
+  });
+  
+  // Hide the login modal
+  closeBtn.addEventListener("click", () => {
+    loginModal.style.display = "none";
+  });
+  
+  // Handle login
+  loginSubmit.addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+  
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
+  
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      alert(`Welcome back, ${userCredential.user.email}!`);
+      loginModal.style.display = "none"; // Close the modal on success
+      console.log(`User logged in: ${userCredential.user.uid}`); // Log user ID
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+      alert("Login failed. Please check your credentials.");
+    }
+  });
+  
+  // Handle logout
+  logoutButton.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      alert("You have been logged out.");
+      console.log("User logged out");
+    } catch (error) {
+      console.error("Error signing out:", error.message);
+      alert("Logout failed.");
+    }
+  });
+
+// Close modal on outside click
+window.addEventListener("click", (e) => {
+  if (e.target === loginModal) {
+    loginModal.style.display = "none";
+  }
+});
 
 // Fetch and populate the kid dropdowns
 async function fetchKids() {

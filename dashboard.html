@@ -11,6 +11,23 @@
   <div class="container">
     <h1>Kid of the Week - Dashboard</h1>
 
+    <!-- Login and Logout Buttons -->
+    <div class="form">
+      <button id="loginButton" class="blue">Login</button>
+      <button id="logoutButton" class="red" style="display: none;">Logout</button>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button id="loginSubmit" class="green">Login</button>
+      </div>
+    </div>
+
     <!-- Add a new kid -->
     <div class="form">
       <h2>Add Kid</h2>
