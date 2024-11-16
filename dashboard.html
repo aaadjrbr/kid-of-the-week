@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Kid of the Week</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="dashboard.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Kid of the Week - Dashboard</h1>
+
+    <!-- Add a new kid -->
+    <div class="form">
+      <h2>Add Kid</h2>
+      <input type="text" id="newKidName" placeholder="Kid's Name">
+      <button onclick="addKid()">Add Kid</button>
+    </div>
+
+    <!-- Select a kid and manage points -->
+    <div class="form">
+      <h2>Manage Points</h2>
+      <label for="kidSelect">Select Kid:</label>
+      <select id="kidSelect">
+        <option value="" disabled selected>Select a kid</option>
+      </select>
+      <input type="number" id="points" placeholder="Points">
+      <button onclick="addPoints()">Add Points</button>
+      <button onclick="deductPoints()">Deduct Points</button>
+    </div>
+
+    <!-- Remove a kid -->
+    <div class="form">
+      <h2>Remove Kid</h2>
+      <label for="removeKidSelect">Select Kid:</label>
+      <select id="removeKidSelect">
+        <option value="" disabled selected>Select a kid</option>
+      </select>
+      <button onclick="removeKid()">Remove Kid</button>
+    </div>
+
+    <!-- Manage Goals -->
+    <div class="form">
+      <h2>Manage Goals</h2>
+      <input type="text" id="goalName" placeholder="Goal Name (e.g., Christmas Present)">
+      <input type="number" id="goalPoints" placeholder="Points Needed to Achieve Goal">
+      <button onclick="addGoal()">Add Goal</button>
+      <div id="goalList"></div>
+    </div>
+
+    <!-- Set Week End Date -->
+    <div class="form">
+      <h2>Set Week End</h2>
+      <input type="date" id="weekEndDate">
+      <button onclick="setWeekEnd()">Set Week End</button>
+      <p id="weekEndDisplay"></p>
+    </div>
+
+    <!-- Reset Weekly Points -->
+    <div class="form">
+      <h2>Reset Weekly Points</h2>
+      <button onclick="resetWeeklyPoints()">Reset Weekly Points</button>
+    </div>
+  </div>
+</body>
+</html>
