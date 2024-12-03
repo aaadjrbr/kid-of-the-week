@@ -16,9 +16,9 @@ body {
 
 /* Headings */
 h1, h2 {
-  font-weight: 600;
-  color: #00ffff; /* Neon cyan */
-  text-shadow: 0 0 8px #00ffff, 0 0 14px #00cccc, 0 0 23px #00aaaa;
+  font-weight: 500;
+  color: #ffffff; /* Neon cyan */
+  text-shadow: 0 0 18px #00ffff, 0 0 1px #00cccc, 0 0 8px #00aaaa;
   margin-bottom: 10px;
 }
 
@@ -36,17 +36,33 @@ span#balance-amount {
 }
 
 .balance-display {
-  background: #29b052c7;
+  background: linear-gradient(145deg, #2dd056, #238840); /* Gradient for depth */
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 0 10px #00ffff, 0 0 20px #00cccc, 0 0 30px #00aaaa;
+  box-shadow: 
+    0 0 10px #00ffff, /* Neon glow */
+    0 4px 6px rgba(0, 0, 0, 0.3), /* Soft shadow */
+    inset 0 2px 4px rgba(255, 255, 255, 0.2); /* Inner glow for depth */
   margin-bottom: 20px;
   border: 2px solid #660099; /* Neon border */
+  transform: translateY(-2px); /* Slight elevation */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth interaction */
+}
+
+/* Add hover effect to enhance 3D feel */
+.balance-display:hover {
+  transform: translateY(-5px); /* Pop-out effect */
+  box-shadow: 
+    0 0 15px #00ffff, 
+    0 6px 10px rgba(0, 0, 0, 0.4), 
+    inset 0 3px 5px rgba(255, 255, 255, 0.3);
 }
 
 .balance-display h2 {
-  color: #ffffffc7;
+  color: #000000;
   text-shadow: none;
+  font-weight: 600;
+  font-size: 1.6em;
 }
 
 /* Neon Glow Sections */
@@ -182,5 +198,6 @@ img:hover {
 
 a {
   color: #fff;
+  font-family: 'Poppins', sans-serif;
   text-decoration: none;
 }
