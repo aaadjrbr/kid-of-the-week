@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash Stash Central - Kids Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="kids-styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Logo Section -->
+    <div class="img-container">
+        <img src="https://firebasestorage.googleapis.com/v0/b/son-of-the-week.firebasestorage.app/o/cash-stash-logo.webp?alt=media&token=87a311b2-f1f9-45e8-a5a4-b2a40229ddb2" alt="Cash Stash Logo">
+    </div>
+    <h1 style="text-align: center;">I'm just a chill bank 🤷‍♂️<br>
+    <span class="a-edit"><a href="../index.html">Go back to Ranking 🎯</a></span></h1>
+    
+    <br/><br/>
+
+    <!-- Select Kid -->
+    <div class="select-kid-section">
+      <h2>Who’s There?</h2>
+      <select id="kid-select">
+        <option value="" disabled selected>Select your name</option>
+      </select>
+    </div>
+
+    <!-- Display Balance -->
+    <div class="balance-display">
+      <h2>💸 Balance: <span id="balance-amount">$0</span></h2>
+    </div>
+
+    <!-- Filter History -->
+    <div class="filter-section">
+    <h2>🗓️ Select Month/Year (History)</h2>
+      <label for="filter-month">Month:</label>
+      <select id="filter-month"></select>
+
+      <label for="filter-year">Year:</label>
+      <select id="filter-year"></select>
+    </div>
+
+    <!-- View History -->
+    <div class="history-section">
+      <h2>📊 Balance History</h2>
+      <ul id="history-list">
+        <li>Select a kid and filter to view their history.</li>
+      </ul>
+    </div>
+  </div>
+
+  <br/><br/>
+
+  <script src="kids-scripts.js" type="module"></script>
+</body>
+</html>

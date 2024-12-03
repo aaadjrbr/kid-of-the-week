@@ -1,0 +1,160 @@
+/* General Styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #0d0d0d; /* Dark background for glowing effects */
+  color: #fff;
+  text-align: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Headings */
+h1, h2 {
+  font-weight: 600;
+  color: #00ffff; /* Neon cyan */
+  text-shadow: 0 0 8px #00ffff, 0 0 14px #00cccc, 0 0 23px #00aaaa;
+  margin-bottom: 10px;
+}
+
+/* Neon Glow Sections */
+.select-kid-section, 
+.balance-display, 
+.filter-section, 
+.history-section {
+  background: #000000ee; /* Dark card background */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #ff00ff, 0 0 20px #9900cc, 0 0 30px #660099;
+  margin-bottom: 20px;
+  border: 1px solid #660099; /* Neon border */
+}
+
+/* Dropdowns and Spans */
+select, span {
+  font-size: 18px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #00ffff;
+  border-radius: 8px;
+  background: #000000; /* Match card background */
+  color: #fff;
+  box-shadow: 0 0 8px #00ffff, 0 0 16px #00cccc;
+  outline: none;
+  transition: 0.3s;
+}
+
+select:hover, select:focus {
+  border-color: #ff00ff;
+  box-shadow: 0 0 15px #ff00ff, 0 0 30px #9900cc;
+}
+
+/* Glowing Buttons */
+button {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 20px;
+  color: #fff;
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+  transform: scale(1.05);
+}
+
+/* History List */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #000000; /* Slightly lighter than section background */
+  border: 1px solid #ff00ff;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 6px #ff00ff, 0 0 14px #9900cc;
+  transition: 0.3s ease;
+}
+
+li:hover {
+  background: #1a1a1a;
+  box-shadow: 0 0 9px #00ffff, 0 0 22px #ff00ff;
+  cursor: pointer;
+}
+
+/* Filter Section */
+.filter-section {
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-section label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ff00ff;
+  text-shadow: 0 0 5px #ff00ff, 0 0 10px #9900cc;
+}
+
+/* Logo Styling */
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  width: 80%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff, 0 0 30px #9900cc;
+  transition: transform 0.3s;
+}
+
+img:hover {
+  transform: scale(1.05) rotate(3deg);
+}
+
+/* Animated Glowing Borders */
+.select-kid-section,
+.balance-display,
+.filter-section,
+.history-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.select-kid-section::before,
+.balance-display::before,
+.filter-section::before,
+.history-section::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+  z-index: -1;
+  filter: blur(20px);
+  opacity: 0.8;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
