@@ -134,7 +134,7 @@ document.getElementById("set-balance-btn").addEventListener("click", async () =>
       history: [
         ...kidData.history,
         {
-          date: new Date().toISOString().split("T")[0],
+          timestamp: new Date().toISOString(), // Use ISO string for full date and time
           change,
           type,
           priorBalance,
@@ -152,22 +152,38 @@ document.getElementById("set-balance-btn").addEventListener("click", async () =>
 
 // View history for selected kid
 document.getElementById("kid-select").addEventListener("change", async () => {
-  const selectedKid = kidSelect.value;
-  if (selectedKid) {
-    const kidDoc = doc(db, "bank", selectedKid);
-    const kidData = (await getDoc(kidDoc)).data();
-
-    // Display history
-    historyList.innerHTML = '';
-    kidData.history.forEach((entry) => {
-      const listItem = document.createElement("li");
-      listItem.textContent = `${entry.date}: ${
-        entry.type === "add" ? "+" : "-"
-      }$${entry.change} (Prior: $${entry.priorBalance})`;
-      historyList.appendChild(listItem);
-    });
-  }
-});
+    const selectedKid = kidSelect.value;
+    if (selectedKid) {
+      const kidDoc = doc(db, "bank", selectedKid);
+      const kidSnapshot = await getDoc(kidDoc);
+  
+      if (kidSnapshot.exists()) {
+        const kidData = kidSnapshot.data();
+  
+        // Ensure `history` exists and is an array
+        if (!Array.isArray(kidData.history)) {
+          console.log(`History field is missing or invalid for kid: ${selectedKid}`);
+          
+          // Initialize `history` field as an empty array in Firestore
+          await updateDoc(kidDoc, { history: [] });
+          kidData.history = []; // Update local reference
+        }
+  
+        // Display history
+        historyList.innerHTML = '';
+        kidData.history.forEach((entry) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = `${entry.timestamp}: ${
+            entry.type === "add" ? "+" : "-"
+          }$${entry.change} (Prior: $${entry.priorBalance})`;
+          historyList.appendChild(listItem);
+        });
+      } else {
+        console.error("Kid document not found.");
+        alert("Selected kid data not found!");
+      }
+    }
+  });   
 
 // Sign In Example
 document.getElementById("sign-in-btn")?.addEventListener("click", async () => {

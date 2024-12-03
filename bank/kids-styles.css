@@ -22,9 +22,35 @@ h1, h2 {
   margin-bottom: 10px;
 }
 
+span#balance-amount {
+  font-size: 24px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  background: #000000 !important;
+  color: #ffffff;
+  box-shadow: none;
+  outline: none;
+  transition: 0.3s;
+}
+
+.balance-display {
+  background: #29b052c7;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #00cccc, 0 0 30px #00aaaa;
+  margin-bottom: 20px;
+  border: 2px solid #660099; /* Neon border */
+}
+
+.balance-display h2 {
+  color: #ffffffc7;
+  text-shadow: none;
+}
+
 /* Neon Glow Sections */
-.select-kid-section, 
-.balance-display, 
+.select-kid-section,
 .filter-section, 
 .history-section {
   background: #000000ee; /* Dark card background */

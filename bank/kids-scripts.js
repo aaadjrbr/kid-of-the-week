@@ -92,8 +92,10 @@ function displayFilteredHistory(history) {
 
   // Filter history entries by month and year
   const filteredHistory = history.filter((entry) => {
-    const [entryYear, entryMonth] = entry.date.split("-").map(Number); // Extract year and month
-    return entryMonth === selectedMonth && entryYear === selectedYear;
+    const entryDate = new Date(entry.timestamp); // Parse timestamp into a Date object
+    const entryYear = entryDate.getFullYear();
+    const entryMonth = entryDate.getMonth() + 1; // Month is zero-indexed
+    return entryMonth === selectedMonth && entryYear === selectedYear;    
   });
 
   // Display filtered history
@@ -102,10 +104,13 @@ function displayFilteredHistory(history) {
   } else {
     filteredHistory.forEach((entry) => {
       const listItem = document.createElement("li");
-      listItem.textContent = `${entry.date}: ${
+      const formattedDate = new Date(entry.timestamp).toLocaleDateString(); // Format the timestamp
+      listItem.textContent = `${formattedDate}: ${
         entry.type === "add" ? "+" : "-"
-      }$${entry.change} (Prior: $${entry.priorBalance})`;
-      historyList.appendChild(listItem);
+      }$${entry.change} (Prior: $${entry.priorBalance})`;      
+      
+      // Prepend instead of append to invert the order
+      historyList.prepend(listItem);
     });
   }
 }
