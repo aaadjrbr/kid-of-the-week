@@ -77,7 +77,7 @@ async function fetchKidData(kidId) {
     // Display balance
     balanceAmount.textContent = `$${kidData.balance}`;
     // Display filtered history
-    displayFilteredHistory(kidData.history);
+    displayFilteredHistory(kidData.history || {}); // Pass empty object if history is undefined
   } else {
     alert("Kid data not found!");
   }
@@ -85,30 +85,25 @@ async function fetchKidData(kidId) {
 
 // Filter and display history by month and year
 function displayFilteredHistory(history) {
-  const selectedMonth = parseInt(filterMonth.value);
-  const selectedYear = parseInt(filterYear.value);
+  const selectedMonth = filterMonth.value; // Get selected month as a string
+  const selectedYear = filterYear.value; // Get selected year as a string
 
   historyList.innerHTML = ""; // Clear current history list
 
-  // Filter history entries by month and year
-  const filteredHistory = history.filter((entry) => {
-    const entryDate = new Date(entry.timestamp); // Parse timestamp into a Date object
-    const entryYear = entryDate.getFullYear();
-    const entryMonth = entryDate.getMonth() + 1; // Month is zero-indexed
-    return entryMonth === selectedMonth && entryYear === selectedYear;    
-  });
+  // Safely access the selected year's and month's history
+  const monthlyHistory = history[selectedYear]?.[selectedMonth] || [];
 
   // Display filtered history
-  if (filteredHistory.length === 0) {
+  if (monthlyHistory.length === 0) {
     historyList.innerHTML = "<li>No history for the selected period.</li>";
   } else {
-    filteredHistory.forEach((entry) => {
+    monthlyHistory.forEach((entry) => {
       const listItem = document.createElement("li");
       const formattedDate = new Date(entry.timestamp).toLocaleDateString(); // Format the timestamp
       listItem.textContent = `${formattedDate}: ${
         entry.type === "add" ? "+" : "-"
-      }$${entry.change} (Prior: $${entry.priorBalance})`;      
-      
+      }$${entry.change} (Prior: $${entry.priorBalance})`;
+
       // Prepend instead of append to invert the order
       historyList.prepend(listItem);
     });

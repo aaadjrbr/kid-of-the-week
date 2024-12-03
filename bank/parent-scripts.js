@@ -119,27 +119,50 @@ document.getElementById("set-balance-btn").addEventListener("click", async () =>
   ensureAuthenticated();
   const selectedKid = kidSelect.value;
   const newBalance = parseFloat(newBalanceInput.value);
+
   if (selectedKid && !isNaN(newBalance)) {
     const kidDoc = doc(db, "bank", selectedKid);
-    const kidData = (await getDoc(kidDoc)).data();
-    const priorBalance = kidData.balance;
+    const kidSnapshot = await getDoc(kidDoc);
+    const kidData = kidSnapshot.exists() ? kidSnapshot.data() : {}; // Ensure kidData exists
+    const priorBalance = kidData.balance ?? 0; // Default to 0 if balance is missing
 
     // Calculate the change
     const change = newBalance - priorBalance;
     const type = change > 0 ? "add" : "deduct";
 
-    // Update the balance and history
-    await updateDoc(kidDoc, {
+    // Get current date details
+    const now = new Date();
+    const year = now.getFullYear().toString(); // Convert year to string for object key
+    const month = (now.getMonth() + 1).toString(); // Convert month to string
+
+    // Safely initialize `history` as an object
+    let history = kidData.history;
+    if (!history || typeof history !== "object" || Array.isArray(history)) {
+      history = {}; // Force history to be an object
+    }
+
+    // Initialize year and month if not present
+    if (!history[year]) history[year] = {};
+    if (!history[year][month]) history[year][month] = [];
+
+    // Add new transaction
+    history[year][month].push({
+      timestamp: now.toISOString(),
+      change,
+      type,
+      priorBalance,
+    });
+
+    // Log the update object for debugging
+    console.log("Update Object:", {
       balance: newBalance,
-      history: [
-        ...kidData.history,
-        {
-          timestamp: new Date().toISOString(), // Use ISO string for full date and time
-          change,
-          type,
-          priorBalance,
-        },
-      ],
+      history: history,
+    });
+
+    // Update Firestore
+    await updateDoc(kidDoc, {
+      balance: newBalance, // Ensure balance is valid
+      history: history, // Ensure history is properly structured
     });
 
     alert(`Balance updated successfully!`);
@@ -152,38 +175,40 @@ document.getElementById("set-balance-btn").addEventListener("click", async () =>
 
 // View history for selected kid
 document.getElementById("kid-select").addEventListener("change", async () => {
-    const selectedKid = kidSelect.value;
-    if (selectedKid) {
-      const kidDoc = doc(db, "bank", selectedKid);
-      const kidSnapshot = await getDoc(kidDoc);
-  
-      if (kidSnapshot.exists()) {
-        const kidData = kidSnapshot.data();
-  
-        // Ensure `history` exists and is an array
-        if (!Array.isArray(kidData.history)) {
-          console.log(`History field is missing or invalid for kid: ${selectedKid}`);
-          
-          // Initialize `history` field as an empty array in Firestore
-          await updateDoc(kidDoc, { history: [] });
-          kidData.history = []; // Update local reference
-        }
-  
-        // Display history
-        historyList.innerHTML = '';
-        kidData.history.forEach((entry) => {
+  const selectedKid = kidSelect.value;
+  const selectedYear = parseInt(filterYear.value);
+  const selectedMonth = parseInt(filterMonth.value);
+
+  if (selectedKid) {
+    const kidDoc = doc(db, "bank", selectedKid);
+    const kidSnapshot = await getDoc(kidDoc);
+
+    if (kidSnapshot.exists()) {
+      const kidData = kidSnapshot.data();
+
+      // Get transactions for the selected year and month
+      const history = kidData.history || {};
+      const monthlyHistory = history[selectedYear]?.[selectedMonth] || [];
+
+      // Display transactions
+      historyList.innerHTML = '';
+      if (monthlyHistory.length === 0) {
+        historyList.innerHTML = "<li>No transactions for this period.</li>";
+      } else {
+        monthlyHistory.forEach((entry) => {
           const listItem = document.createElement("li");
-          listItem.textContent = `${entry.timestamp}: ${
+          listItem.textContent = `${new Date(entry.timestamp).toLocaleString()}: ${
             entry.type === "add" ? "+" : "-"
           }$${entry.change} (Prior: $${entry.priorBalance})`;
           historyList.appendChild(listItem);
         });
-      } else {
-        console.error("Kid document not found.");
-        alert("Selected kid data not found!");
       }
+    } else {
+      console.error("Kid document not found.");
+      alert("Selected kid data not found!");
     }
-  });   
+  }
+});  
 
 // Sign In Example
 document.getElementById("sign-in-btn")?.addEventListener("click", async () => {
