@@ -98,9 +98,12 @@ function displayFilteredHistory(history) {
     historyList.innerHTML = "<li>No history for the selected period.</li>";
   } else {
     monthlyHistory.forEach((entry) => {
+      const entryDate = new Date(entry.timestamp); // Convert timestamp to Date object
+      const formattedDate = entryDate.toLocaleDateString(); // Format the date
+      const formattedTime = entryDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format the time
+
       const listItem = document.createElement("li");
-      const formattedDate = new Date(entry.timestamp).toLocaleDateString(); // Format the timestamp
-      listItem.textContent = `${formattedDate}: ${
+      listItem.textContent = `${formattedDate} ${formattedTime}: ${
         entry.type === "add" ? "+" : "-"
       }$${entry.change} (Prior: $${entry.priorBalance})`;
 

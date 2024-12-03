@@ -49,6 +49,21 @@ function updateKidsUI(kids) {
   kidSelect.innerHTML = '';
   editKidSelect.innerHTML = '';
 
+  // Add default "Select a kid" option
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.textContent = 'Select a kid';
+  defaultOption.selected = true;
+  defaultOption.disabled = true;
+  kidSelect.appendChild(defaultOption);
+
+  const defaultEditOption = document.createElement('option');
+  defaultEditOption.value = '';
+  defaultEditOption.textContent = 'Select a kid';
+  defaultEditOption.selected = true;
+  defaultEditOption.disabled = true;
+  editKidSelect.appendChild(defaultEditOption);
+
   kids.forEach((kid) => {
     // Balance List
     const balanceItem = document.createElement('div');
@@ -105,12 +120,20 @@ document.getElementById("remove-kid-btn").addEventListener("click", async () => 
   ensureAuthenticated();
   const selectedKid = editKidSelect.value;
   if (selectedKid) {
-    const kidDoc = doc(db, "bank", selectedKid);
-    await deleteDoc(kidDoc);
-    alert('Kid removed successfully.');
-    fetchKids();
+    const confirmDelete = confirm("Are you sure you want to remove this kid? This action cannot be undone.");
+    if (confirmDelete) {
+      const kidDoc = doc(db, "bank", selectedKid);
+      try {
+        await deleteDoc(kidDoc);
+        alert("Kid removed successfully.");
+        fetchKids();
+      } catch (error) {
+        console.error("Error removing kid:", error);
+        alert("Failed to remove the kid. Please try again.");
+      }
+    }
   } else {
-    alert('Please select a kid to remove.');
+    alert("Please select a kid to remove.");
   }
 });
 
@@ -173,11 +196,59 @@ document.getElementById("set-balance-btn").addEventListener("click", async () =>
   }
 });
 
-// View history for selected kid
+// Populate month and year dropdowns
+function populateDateFilters() {
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1; // Month is zero-indexed
+
+  // Populate years (last 10 years including current year)
+  for (let year = currentYear; year >= currentYear - 10; year--) {
+    const option = document.createElement("option");
+    option.value = year;
+    option.textContent = year;
+    document.getElementById("filter-year").appendChild(option);
+
+    // Set the current year as the default selection
+    if (year === currentYear) {
+      option.selected = true;
+    }
+  }
+
+  // Populate months (1–12)
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  months.forEach((month, index) => {
+    const option = document.createElement("option");
+    option.value = index + 1; // Month value (1-12)
+    option.textContent = month;
+    document.getElementById("filter-month").appendChild(option);
+
+    // Set the current month as the default selection
+    if (index + 1 === currentMonth) {
+      option.selected = true;
+    }
+  });
+}
+
+// Event listener for selecting a kid
 document.getElementById("kid-select").addEventListener("change", async () => {
   const selectedKid = kidSelect.value;
-  const selectedYear = parseInt(filterYear.value);
-  const selectedMonth = parseInt(filterMonth.value);
+
+  // Get selected year and month
+  const selectedYear = parseInt(document.getElementById("filter-year").value);
+  const selectedMonth = parseInt(document.getElementById("filter-month").value);
 
   if (selectedKid) {
     const kidDoc = doc(db, "bank", selectedKid);
@@ -195,7 +266,8 @@ document.getElementById("kid-select").addEventListener("change", async () => {
       if (monthlyHistory.length === 0) {
         historyList.innerHTML = "<li>No transactions for this period.</li>";
       } else {
-        monthlyHistory.forEach((entry) => {
+        // Reverse the array to display the most recent first
+        monthlyHistory.slice().reverse().forEach((entry) => {
           const listItem = document.createElement("li");
           listItem.textContent = `${new Date(entry.timestamp).toLocaleString()}: ${
             entry.type === "add" ? "+" : "-"
@@ -208,7 +280,7 @@ document.getElementById("kid-select").addEventListener("change", async () => {
       alert("Selected kid data not found!");
     }
   }
-});  
+});
 
 // Sign In Example
 document.getElementById("sign-in-btn")?.addEventListener("click", async () => {
@@ -234,9 +306,15 @@ document.getElementById("sign-out-btn")?.addEventListener("click", async () => {
 });
 
 // Initial Auth Check
+// Initial Auth Check
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User signed in:", user.email);
+
+    // Populate dropdowns for filters
+    populateDateFilters();
+
+    // Fetch kids to display
     fetchKids();
   } else {
     console.log("User signed out.");

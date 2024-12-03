@@ -19,7 +19,7 @@
 
     <!-- Balances Section -->
     <div class="balances-section">
-      <h2>Kids' Balances</h2>
+      <h2>💰 Kids' Balances</h2>
       <div id="balances-list"></div>
     </div>
 
@@ -36,9 +36,23 @@
         </div>
 
     <div class="history-section">
-      <h2>Balance History</h2>
-      <ul id="history-list"></ul>
-    </div>     
+    <!-- Filter by Month and Year -->
+          <div class="filter-section">
+            <h2>📝 Balance History</h2>
+            <label for="filter-month">Month:</label>
+            <select id="filter-month">
+              <!-- Options will be populated dynamically -->
+            </select>
+        
+            <label for="filter-year">Year:</label>
+            <select id="filter-year">
+              <!-- Options will be populated dynamically -->
+            </select>
+            <br/><br/>
+            <ul id="history-list"></ul>
+            <br/>
+          </div>
+    </div>          
 
     <!-- Add Kid Section -->
     <div class="add-section">
@@ -48,7 +62,7 @@
         <input type="text" id="add-kid-name" required>
         <label for="add-kid-balance">Starting Balance (USD):</label>
         <input type="number" id="add-kid-balance" required>
-        <button type="button" id="add-kid-btn">Add Kid</button>
+        <button type="button" id="add-kid-btn">➕ Add Kid</button>
       </form>
     </div>
 
@@ -60,8 +74,8 @@
         <select id="edit-kid-select"></select>
         <label for="new-kid-name">New Name:</label>
         <input type="text" id="new-kid-name">
-        <button type="button" id="rename-kid-btn">Rename Kid</button>
-        <button type="button" id="remove-kid-btn">Remove Kid</button>
+        <button type="button" id="rename-kid-btn">✏️ Rename Kid</button>
+        <button type="button" id="remove-kid-btn">❌ Remove Kid</button>
       </form>
     </div>
 
