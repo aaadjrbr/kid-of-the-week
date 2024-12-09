@@ -304,8 +304,9 @@ const checkBuryLimit = async (userId) => {
 
 const buryCard = async (wordObj, userId) => {
     try {
-        const cardRef = doc(collection(db, `spark/${userId}/cards`), wordObj.word);
-        const buriedCardRef = doc(collection(db, `spark/${userId}/buriedCards`), wordObj.word);
+        const encodedWord = encodeURIComponent(wordObj.word);
+        const cardRef = doc(collection(db, `spark/${userId}/cards`), encodedWord);
+        const buriedCardRef = doc(collection(db, `spark/${userId}/buriedCards`), encodedWord);        
 
         // Add to buriedCards
         await setDoc(buriedCardRef, wordObj);
