@@ -423,43 +423,50 @@ select#voiceSelect {
 #speedControl {
     -webkit-appearance: none;
     appearance: none;
-    width: 60%; /* Full-width for mobile */
+    width: 60%;
     height: 12px;
-    background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+    background: linear-gradient(135deg, #28fbff, #b5bc11);
     border-radius: 5px;
     outline: none;
     cursor: pointer;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Slider thumb for Chrome, Edge, Safari */
 #speedControl::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
-    background: #ffffff;
-    border: 2px solid #6a11cb;
-    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 40px; /* Center the emoji */
+    background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><text y="35" font-size="30" text-anchor="middle" x="25">⚡</text></svg>') no-repeat center center;
+    background-size: 70%; /* Adjust size of emoji */
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
 #speedControl::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
+    transform: scale(1.2); /* Scale up on hover */
 }
 
+/* Slider thumb for Firefox */
 #speedControl::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: #ffffff;
-    border: 2px solid #6a11cb;
-    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><text y="35" font-size="30" text-anchor="middle" x="25">⚡</text></svg>') no-repeat center center;
+    background-size: 70%; /* Adjust size of emoji */
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
+/* Optional hover/active states for the thumb */
+#speedControl::-webkit-slider-thumb:hover {
+    transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
 #speedControl::-moz-range-thumb:hover {
-    transform: scale(1.2);
+    transform: scale(1.2); /* Slightly enlarge on hover (if supported) */
 }
 
 #controlBar {
