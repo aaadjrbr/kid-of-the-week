@@ -10,6 +10,10 @@ body {
     text-align: center;
 }
 
+label, span {
+    font-family: 'Roboto', sans-serif;
+}
+
 body.modal-open {
     overflow: hidden;
 }
@@ -414,4 +418,73 @@ select#voiceSelect {
 
 #textList li:active {
     transform: translateY(2px);
+}
+
+#controlBar {
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: linear-gradient(90deg, #6a11cb, #2575fc); /* Purple gradient */
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 500px;
+}
+
+#speedLabel {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#speedControl {
+    width: 200px;
+    height: 8px;
+    border-radius: 5px;
+    background: #ffffff;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#speedControl::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #6a11cb;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+#speedControl::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+#speedControl::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #6a11cb;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+#speedControl::-moz-range-thumb:hover {
+    transform: scale(1.2);
+}
+
+#speedValue {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
 }

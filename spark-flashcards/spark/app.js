@@ -169,17 +169,36 @@ const populateVoiceList = () => {
 window.onload = populateVoiceList;
 
 // Function to speak a given text
-const speakText = (text) => {
-    const synth = window.speechSynthesis;
-    const utterance = new SpeechSynthesisUtterance(text);
-    const selectedVoice = document.getElementById('voiceSelect').value;
-    const voice = synth.getVoices().find(voice => voice.name === selectedVoice);
-    if (voice) {
-        utterance.voice = voice;
+document.addEventListener('DOMContentLoaded', () => {
+    const speedControl = document.getElementById('speedControl');
+    const speedValue = document.getElementById('speedValue');
+    const testSpeakButton = document.getElementById('testSpeakButton');
+
+    if (speedControl && speedValue) {
+        speedControl.addEventListener('input', () => {
+            speedValue.textContent = `${speedControl.value}x`;
+        });
     }
-    utterance.lang = 'en-US';
-    synth.speak(utterance);
-};
+
+    const speakText = (text) => {
+        const synth = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(text);
+        const selectedVoice = document.getElementById('voiceSelect')?.value;
+        const voice = synth.getVoices().find(v => v.name === selectedVoice);
+        if (voice) utterance.voice = voice;
+        utterance.rate = speedControl ? parseFloat(speedControl.value) : 1;
+        utterance.lang = 'pt-BR';
+        synth.speak(utterance);
+    };
+
+    if (testSpeakButton) {
+        testSpeakButton.addEventListener('click', () => {
+            speakText('Testing adjustable reading speed');
+        });
+    }
+
+    window.speakText = speakText; // Expose globally if needed elsewhere
+});
 
 const displayFlashcards = (words, isBuried) => {
     const container = document.getElementById('flashcards-container');
