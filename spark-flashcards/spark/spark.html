@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+    <meta name="description" content="Inglês com filmes e séries!">
+    <meta name="keywords" content="tvshows, séries, filmes, inglês, aprender">
+    <meta name="author" content="English w/ Adenilson">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="English w/ Tv Shows">
+    <meta property="og:description" content="Aprenda inglês com séries e filmes!">
+    <link rel="apple-touch-icon" href="https://firebasestorage.googleapis.com/v0/b/english-with-tv-shows.appspot.com/o/apple-touch-icon.png?alt=media&token=190e7f58-4f90-4fc6-8d84-d564f6c658ad">
+    <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/english-with-tv-shows.appspot.com/o/favicon.png?alt=media&token=a8159732-30b4-451f-873a-9a34f56211ad" type="image/x-icon">
+    <title>⚡ Spark: Flashcards</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Import Google Fonts - Icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading spinner container -->
+    <div class="loader-container">
+        <img style="width: 90px; height: 90px;" src="https://firebasestorage.googleapis.com/v0/b/son-of-the-week.firebasestorage.app/o/loading-gif.gif?alt=media&token=8cfcda45-e220-4608-90af-4c0068c49741" alt="Loader">
+    </div>
+
+    <div id="site-content" style="display: none;">
+        <header>
+            <h3 class="spark">⚡ Spark</h3>
+            <h2>
+                Made w/ ❤️ to my love.
+            </h2>
+
+            <button><a href="../../dashboard.html">Go back to Dashboard</a></button>
+            <br/><br/>
+            <div id="loadingBarContainer">
+            <div class="container-2">
+                <p style="padding: 10px;">💡 You can save up to 50 phrases/words; we recommend saving only the necessary ones.</p>
+                <div id="savedWordsCount" style="font-weight: bold; font-size: 1.3em; padding: 10px;">0/50 saved phrases 💾</div>
+            </div>
+            </div>
+
+            <div id="warning" style="display: flex; margin: 10px 0; align-items: center; justify-content: center;">
+                <h3 style="background-color: #FFB30014; padding: 10px; color: #FFB300; border: 1px solid #FFB300; width: 60%; text-align: center; border-radius: 5px;">
+                  <span class="material-symbols-outlined" style="vertical-align: middle;">
+                    error
+                  </span> 
+                  Tool in testing phase. Errors may occur or be displayed.
+                </h3>
+            </div>  
+        </header>
+        <hr/><br/>
+        
+        <div class="navigation">
+            <label for="levelSelector">To get started, select the deck:</label><br/>
+            <div style="margin-bottom: 3px;"></div>
+            <select id="levelSelector">
+                <option value="phrases">Phrases</option>
+                <option value="vocabulary">Vocabulary</option>
+            </select>
+            <br/>
+            <p>Now, select a topic:</p>
+            <button id="modalButton">🔎 Select Topic</button>
+
+            <div id="textModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p style="font-size: 1.1em;">📌 Select a topic to get started:</p>
+
+                    <!-- Search Bar -->
+                    <input type="text" id="searchBar" placeholder="🔎 Search topic..." style="font-family: 'Roboto', Arial; width: 90%; font-size: 1.1em; padding: 8px; margin-bottom: 10px; border-radius: 12px; border: 2px solid #6a1b9a;">
+                    <p><em style="color: orange;">*Clear the text to see all topics again.</em></p>
+
+                    <ul id="textList">
+                        <!-- Text options will be loaded here -->
+                    </ul>
+                </div>
+            </div>
+            <br/><br/>
+            <label for="voiceSelect">Select a voice:</label><br/>
+            <select id="voiceSelect"></select>
+            <p style="padding: 10px;">*Note: Voice selection may not be available on mobile phones.</p>
+
+            <div id="limitMessage">❌ You can only save up to 50 words/phrases. Please delete some to save more.</div>
+        </div>
+
+        <div id="DeckContainer">
+            <div id="deckName"></div>
+        </div>
+
+        <p style="color: orange;">⚠️ Only save words/phrases you are struggling with.</p>
+        <br/>
+        <div id="flashcards-container"></div>
+        <div class="navigation">
+            <p>💡 Click on the phrase/word to see its translation.</p>
+            <button id="prevButton">Back</button>
+            <button id="nextButton">Next</button>            
+            <br/><br/>
+            <button id="viewBuriedButton">View saved phrases/words 💙</button>
+        </div>
+            
+        <div id="DeckContainer">
+            <div id="loadingBar"></div>
+            <div id="wordCount"></div>
+        </div>
+        <br/><br/>
+    </div><!-- div for loader -->
+
+    <!-- Existing script imports -->
+    <script type="module" src="app.js"></script>
+
+    <!-- Dynamic level-based script loading -->
+    <script type="module">
+        document.getElementById('levelSelector').addEventListener('change', async (event) => {
+            const selectedLevel = event.target.value;
+            let scriptPath;
+            if (selectedLevel === 'phrases') {
+                scriptPath = './phrases.js';
+            } else if (selectedLevel === 'vocabulary') {
+                scriptPath = './vocabulary.js';
+            //} else if (selectedLevel === 'advanced') {
+                //scriptPath = './loadTextOptionsAdvanced.js';
+            //}
+            //else if (selectedLevel === 'proficient') {
+                   // scriptPath = './loadTextOptionsProficient.js';
+            }
+
+            if (scriptPath) {
+                const existingScript = document.querySelector('#loadTextOptionsScript');
+                if (existingScript) {
+                    existingScript.remove();
+                }
+
+                const script = document.createElement('script');
+                script.src = scriptPath;
+                script.type = 'module';
+                script.id = 'loadTextOptionsScript';
+                document.body.appendChild(script);
+            }
+        });
+
+        // Get the search input element and the list of text options
+        const searchBar = document.getElementById('searchBar');
+        const textList = document.getElementById('textList');
+
+        // Function to normalize strings and remove accents
+        function normalizeString(str) {
+            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        }
+
+    // Add an event listener to the search bar to filter options as the user types
+    searchBar.addEventListener('input', function() {
+        const searchTerm = normalizeString(searchBar.value); // Normalize the search term
+
+    // Get all the list items (text options)
+    const textItems = textList.getElementsByTagName('li');
+
+    // Loop through the list items and hide those that don't match the search term
+    Array.from(textItems).forEach(function(item) {
+        const text = normalizeString(item.textContent); // Normalize the text content of each option
+
+        if (text.includes(searchTerm)) {
+            item.style.display = ''; // Show item if it matches
+        } else {
+            item.style.display = 'none'; // Hide item if it doesn't match
+        }
+    });
+});
+
+
+        // Ensure the correct script is loaded when the modal button is clicked
+        document.getElementById('modalButton').addEventListener('click', () => {
+            const levelSelector = document.getElementById('levelSelector');
+            const selectedLevel = levelSelector.value;
+            let scriptPath;
+            if (selectedLevel === 'phrases') {
+                scriptPath = './phrases.js';
+            //} else if (selectedLevel === 'intermediate') {
+                //scriptPath = './loadTextOptionsIntermediate.js';
+            //} else if (selectedLevel === 'advanced') {
+                //scriptPath = './loadTextOptionsAdvanced.js';
+            //}
+             //else if (selectedLevel === 'proficient') {
+                //scriptPath = './loadTextOptionsProficient.js';
+            }
+
+            if (scriptPath) {
+                const existingScript = document.querySelector('#loadTextOptionsScript');
+                if (existingScript) {
+                    existingScript.remove();
+                }
+
+                const script = document.createElement('script');
+                script.src = scriptPath;
+                script.type = 'module';
+                script.id = 'loadTextOptionsScript';
+                document.body.appendChild(script);
+            }
+
+            const modal = document.getElementById('textModal');
+            modal.style.display = 'block';
+        });
+
+        document.getElementsByClassName('close')[0].addEventListener('click', () => {
+            document.getElementById('textModal').style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('textModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    background: linear-gradient(135deg, #1c1c1c 0%, #2f2f2f 100%);
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 15px;
+    text-align: center;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+h2 a {
+    color: orange;
+}
+
+header {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    margin: 0;
+}
+
+button a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.spark {
+    font-size: 2.6em;
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Montserrat', serif;
+    text-transform: uppercase;
+    background: -webkit-linear-gradient(#eeeeee00, #33333300);
+    background: linear-gradient(#eeeeee00, #33333300); /* Standard property */
+    -webkit-background-clip: text;
+    background-clip: text; /* Standard property */
+    -webkit-text-fill-color: transparent;
+    animation: glow 1.5s ease-in-out infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 30px #e60073, 0 0 8px #e60073, 0 0 14px #e60073, 0 0 60px #e60073, 0 0 18px #e60073;
+    }
+    to {
+      text-shadow: 0 0 2px #fff, 0 0 5px #ff4da6, 0 0 40px #ff4da6, 0 0 10px #ff4da6, 0 0 16px #ff4da6, 0 0 70px #ff4da6, 0 0 22px #ff4da6;
+    }
+  }
+
+button {
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 5px !important;
+}
+
+header button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+header button:hover {
+    transform: translateY(-2px);
+}
+
+div.flashcard-back, div.flashcard-front p {
+    font-size: 1.6em;
+}
+
+.flashcard {
+    border: 1px solid #9c27b0;
+    padding: 20px;
+    margin: 20px auto;
+    text-align: center;
+    width: 75%;
+    max-width: 400px;
+    height: 300px;
+    perspective: 1000px;
+    cursor: pointer;
+    display: none; /* Initially hide all flashcards */
+    background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(156, 39, 176, 0.5);
+    position: relative;
+}
+
+.flashcard.buried {
+    background: linear-gradient(to right, #12c2e93b, #c471ed46, #f64f5a48);
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    border-radius: 10px;
+    padding: 10px; /* Add some padding for better spacing */
+    box-sizing: border-box; /* Ensure padding doesn’t overflow */
+}
+
+.flashcard-front p {
+    margin-top: 60px;
+    margin-bottom: -40px;
+}
+
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    border-radius: 10px;
+}
+
+.flashcard-front {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+.flashcard-back {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+    transform: rotateY(180deg);
+}
+
+div.flashcard-front p, div.flashcard-back p {
+    padding: 0px;
+}
+
+.spacer {
+    flex-grow: 1; /* Takes up the available space */
+}
+
+.note {
+    font-size: 0.9em !important;
+    color: #666; /* Subtle text color */
+    margin-bottom: 10px !important; /* Space below the note */
+    text-align: center; /* Center align the note text */
+    display: block; /* Ensure it takes up the full width */
+}
+
+.flashcard .speakButton {
+    background: linear-gradient(269.42deg,#0e3bd8 2.59%,#1e99f7 80.67%);
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 50%; /* Rounded corners */
+    padding: 10px; /* Padding around the button */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    position: absolute; /* Positioning */
+    top: 10px; /* Position from the top */
+    right: 10px; /* Position from the right */
+    display: flex; /* Flexbox for centering */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Box shadow */
+    transition: background-color 0.3s ease; /* Transition for background color */
+}
+
+.flashcard .speakButton:hover {
+    background: linear-gradient(269.42deg,#0e3ad8d8 2.59%,#1e99f7d3 80.67%); /* Darker blue on hover */
+}
+
+.buryButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #22ff6c;
+    border: none;
+    border-radius: 5px;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    position: absolute;
+    top: -48px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.buryButton:hover {
+    background-color: #22ff6ce5;
+    box-shadow: 0 0 5px #00e676, 0 0 10px #00c853, 0 0 15px #00a152;
+}
+
+.navigation {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.navigation button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.navigation button:hover {
+    transform: translateY(-2px);
+}
+
+.navigation button:active {
+    transform: translateY(2px);
+  }
+
+.navigation select {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+    background-color: #2c2c2c;
+    color: #fff;
+    border: 1px solid #9c27b0;
+    border-radius: 5px;
+}
+
+.navigation select option {
+    height: 30px; /* Set the desired height for options */
+    padding: 10px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    background-color: #2c2c2c;
+    color: #fff;
+}
+
+select#voiceSelect {
+    font-size: 12px;
+}
+
+.saved-deck-message {
+    width: 75%;
+    margin: 20px auto;
+    font-size: 1.4em;
+    background: rgb(167, 35, 35);
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#DeckContainer {
+    width: 75%;
+    margin: 20px auto;
+    background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#wordCount {
+    text-align: center;
+    font-size: 18px;
+    margin: 20px;
+}
+
+#deckName {
+    text-align: center;
+    font-size: 18px;
+    margin: 20px;
+}
+
+#loadingBarContainer {
+    width: 85%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    border-radius: 10px; padding: 20px; align-items: center;
+    background: linear-gradient(60deg, #420285, #08BDBD);
+    border-left: 8px solid #246e99;
+}
+
+.container-2 {
+    background-color: #ffffffab;
+    color: #444746;
+    border: 3px solid #ddd;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px; padding: 20px; align-items: center;
+    align-self: center; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+#loadingBar {
+    width: 0;
+    height: 20px;
+    border: 2px solid #ddd;
+    background: linear-gradient(90deg, #22ff6ce5, #26964be5);
+    border-radius: 10px;
+    transition: width 0.5s;
+}
+
+#limitMessage {
+    display: none;
+    font-weight: bold;
+    text-align: center;
+    background-color: #fff;
+    padding: 15px;
+    color: red;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Loader Container Styles */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1c1c1c 0%, #2f2f2f 100%);
+    z-index: 9999;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1c1c1c 0%, #2f2f2f 100%);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#textList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#textList li {
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 10px;
+    background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#textList li:hover {
+    transform: translateY(-2px);
+}
+
+#textList li:active {
+    transform: translateY(2px);
+}
