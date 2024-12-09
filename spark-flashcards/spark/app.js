@@ -172,32 +172,66 @@ window.onload = populateVoiceList;
 document.addEventListener('DOMContentLoaded', () => {
     const speedControl = document.getElementById('speedControl');
     const speedValue = document.getElementById('speedValue');
-    const testSpeakButton = document.getElementById('testSpeakButton');
 
     if (speedControl && speedValue) {
+        // Update displayed speed value dynamically
         speedControl.addEventListener('input', () => {
             speedValue.textContent = `${speedControl.value}x`;
         });
     }
 
+    // Function to speak text with speed control
+    let isSpeaking = false; // Track if the speech is ongoing
+
     const speakText = (text) => {
         const synth = window.speechSynthesis;
+    
+        // Prevent overlapping speech
+        if (isSpeaking) {
+            console.log("Speech is already in progress.");
+            return;
+        }
+    
+        // Stop any ongoing speech first
+        if (synth.speaking) {
+            synth.cancel();
+        }
+    
         const utterance = new SpeechSynthesisUtterance(text);
+    
+        // Get selected voice
         const selectedVoice = document.getElementById('voiceSelect')?.value;
         const voice = synth.getVoices().find(v => v.name === selectedVoice);
-        if (voice) utterance.voice = voice;
+        if (voice) {
+            utterance.voice = voice;
+        }
+    
+        // Set speed from the speedControl input
+        const speedControl = document.getElementById('speedControl');
         utterance.rate = speedControl ? parseFloat(speedControl.value) : 1;
         utterance.lang = 'pt-BR';
+    
+        // Mark as speaking and reset on end
+        isSpeaking = true;
+        utterance.onend = () => {
+            console.log("Speech finished.");
+            isSpeaking = false;
+        };
+    
         synth.speak(utterance);
     };
 
-    if (testSpeakButton) {
-        testSpeakButton.addEventListener('click', () => {
-            speakText('Testing adjustable reading speed');
+    // Attach speakText functionality to flashcard buttons
+    document.querySelectorAll('.speakButton').forEach((button) => {
+        button.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent interfering with card flip
+            const textToSpeak = button.closest('.flashcard-front').querySelector('p').textContent;
+            speakText(textToSpeak);
         });
-    }
+    });
 
-    window.speakText = speakText; // Expose globally if needed elsewhere
+    // Expose globally if needed in other modules
+    window.speakText = speakText;
 });
 
 const displayFlashcards = (words, isBuried) => {
