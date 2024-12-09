@@ -421,7 +421,9 @@ select#voiceSelect {
 }
 
 #speedControl {
-    -webkit-appearance: none;
+    -webkit-box-shadow: none !important; /* Remove shadow on WebKit browsers */
+    box-shadow: none; /* Remove shadow for other browsers */
+    -webkit-appearance: none !important;
     appearance: none;
     width: 60%;
     height: 12px;
@@ -433,10 +435,12 @@ select#voiceSelect {
 
 /* Slider thumb for Chrome, Edge, Safari */
 #speedControl::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    -webkit-box-shadow: none !important; /* Remove shadow from thumb on WebKit browsers */
+    box-shadow: none; /* Remove shadow for other browsers */
+    -webkit-appearance: none !important;
     appearance: none;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     text-align: center;
     line-height: 40px; /* Center the emoji */
     background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><text y="35" font-size="30" text-anchor="middle" x="25">⚡</text></svg>') no-repeat center center;
@@ -451,8 +455,9 @@ select#voiceSelect {
 
 /* Slider thumb for Firefox */
 #speedControl::-moz-range-thumb {
-    width: 50px;
-    height: 50px;
+    box-shadow: none; /* Remove shadow for Firefox thumbs */
+    width: 60px;
+    height: 60px;
     background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><text y="35" font-size="30" text-anchor="middle" x="25">⚡</text></svg>') no-repeat center center;
     background-size: 70%; /* Adjust size of emoji */
     cursor: pointer;
